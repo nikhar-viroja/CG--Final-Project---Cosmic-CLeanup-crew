@@ -79,7 +79,7 @@ function onDocumentKeyDown(event) {
             break;
         case 38: // up
             sphere.position.z -= delta;
-            sphere.rotation.x -= rotationAngle; // Correct rotation for forward movement
+            sphere.rotation.x -= rotationAngle; // Rotation for forward movement
             break;
         case 39: // right
             sphere.position.x += delta;
@@ -87,19 +87,96 @@ function onDocumentKeyDown(event) {
             break;
         case 40: // down
             sphere.position.z += delta;
-            sphere.rotation.x += rotationAngle; // Correct rotation for backward movement
+            sphere.rotation.x += rotationAngle; // Rotation for backward movement
             break;
     }
 }
 
-function animate() {
-    requestAnimationFrame(animate);
+const objects = [];
+function createObjects() {
+    const numObjects = 10; // Adjust as needed
+    for (let i = 0; i < numObjects; i++) {
+        const objectGeometry = new THREE.SphereGeometry(2, 16, 16);
+        const objectMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const object = new THREE.Mesh(objectGeometry, objectMaterial);
+        object.position.set(Math.random() * 80 - 40, 2, Math.random() * 80 - 40);
+        scene.add(object);
+        objects.push(object);
+    }
+}
+createObjects();
+
+function checkCollisions() {
+    const ballRadius = sphere.scale.x * sphere.geometry.parameters.radius; // Correct radius calculation considering scale
+    const ballBoundingSphere = new THREE.Sphere(sphere.position, ballRadius);
+    
+    for (let i = objects.length - 1; i >= 0; i--) {
+        const object = objects[i];
+        const objectRadius = object.geometry.parameters.radius; // Assuming uniform size objects
+        const objectBoundingSphere = new THREE.Sphere(object.position, objectRadius);
+
+        if (ballBoundingSphere.intersectsSphere(objectBoundingSphere)) {
+            scene.remove(object);
+            objects.splice(i, 1);
+            // Apply a smaller scaling factor or ensure it scales only if a collision is confirmed
+            sphere.scale.multiplyScalar(1.05); // Scale up by 5%
+        }
+    }
+}
+
+
+function checkGameOver() {
+    if (Math.abs(sphere.position.x) > 50 || Math.abs(sphere.position.z) > 50) {
+        gameOver('You went out of bounds!');
+    } else if (objects.length === 0) {
+        gameOver('Congratulations, you\'ve collected all objects!');
+    }
+}
+
+function gameOver(message) {
+    cancelAnimationFrame(animationId);
+    const modal = document.getElementById('gameOverModal');
+    const messageElement = document.getElementById('gameOverMessage');
+    messageElement.textContent = message;
+    modal.style.display = 'flex'; // Show the modal
+}
+
+function restartGame() {
+    const modal = document.getElementById('gameOverModal');
+    modal.style.display = 'none'; // Hide the modal
+
+    while (scene.children.length > 0) {
+        scene.remove(scene.children[0]);
+    }
+
+    scene.add(plane);
+    sphere.geometry = new THREE.SphereGeometry(3, 32, 32); // Reset geometry
+    sphere.scale.set(1, 1, 1); // Reset scale
+    sphere.position.set(0, 1.5, 0);
+    scene.add(sphere);
+    createObjects();
+    animate();
+}
+
+window.restartGame = restartGame;
+
+let animationId;
+
+let lastRender = 0;
+function animate(timestamp) {
+    animationId = requestAnimationFrame(animate);
+    const deltaTime = (timestamp - lastRender) / 1000;
+    lastRender = timestamp;
+
+    if (deltaTime < 0.2) { // Ensuring that the game logic doesn't update too erratically
+        checkCollisions();
+        checkGameOver();
+    }
 
     camera.position.x = sphere.position.x;
     camera.position.z = sphere.position.z + 15;
     camera.position.y = sphere.position.y + 15;
     camera.lookAt(sphere.position);
-
     renderer.render(scene, camera);
 }
 

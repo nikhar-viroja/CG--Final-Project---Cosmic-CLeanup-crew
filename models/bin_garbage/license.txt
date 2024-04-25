@@ -1,0 +1,11 @@
+Model Information:
+* title:	Garbage Can, Trash Bin, Garbage Container, Weels
+* source:	https://sketchfab.com/3d-models/garbage-can-trash-bin-garbage-container-weels-1eddabb12daa43daae82f4ca4fd6258a
+* author:	k3v1nc0 (https://sketchfab.com/k3v1nc0)
+
+Model License:
+* license type:	CC-BY-ND-4.0 (http://creativecommons.org/licenses/by-nd/4.0/)
+* requirements:	Author must be credited. Modified versions can not be distributed. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Garbage Can, Trash Bin, Garbage Container, Weels" (https://sketchfab.com/3d-models/garbage-can-trash-bin-garbage-container-weels-1eddabb12daa43daae82f4ca4fd6258a) by k3v1nc0 (https://sketchfab.com/k3v1nc0) licensed under CC-BY-ND-4.0 (http://creativecommons.org/licenses/by-nd/4.0/)
