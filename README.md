@@ -1,15 +1,9 @@
-# CG--Final-Project---Katamari-Roll-Roll
+### HOW TO RUN "Space Garbage Collector"
 
-## How to Run?
+- In a terminal,run `npm install`.
 
-First install `http-server` globally,
+Then, 
 
-```
-npm install --global http-server
-```
+`run `npm run dev``
 
-To run, cmd to public directory and run -
-
-```
-http-server
-```
+This will start a live server at `http://localhost:8080`

@@ -1,15 +1,16 @@
 {
-  "name": "cg--final-project---cosmic-cleanup-crew",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "webgl-playground",
+  "version": "0.1.0",
+  "description": "An easy place to start.",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "live-server"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.1.0"
+  },
   "dependencies": {
-    "three": "^0.163.0"
+    "@tweenjs/tween.js": "^23.1.1",
+    "tweenjs": "^1.0.2"
   }
 }
